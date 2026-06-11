@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface ProfileCardProps {
     name: string;
@@ -18,6 +19,12 @@ const ProfileCard = ({
         .map((word) => word[0])
         .join("");
 
+    const [followed, setFollowed] = useState(false);
+
+    const handleFollow = () => {
+        setFollowed(!followed);
+    };
+
     return (
         <View style={styles.card}>
             <View style={styles.avatar}>
@@ -31,6 +38,23 @@ const ProfileCard = ({
             <View style={styles.divider} />
 
             <Text style={styles.bio}>{bio}</Text>
+
+            <TouchableOpacity
+                style={[
+                    styles.button,
+                    followed && styles.buttonFollowed,
+                ]}
+                onPress={handleFollow}
+            >
+                <Text
+                    style={[
+                        styles.buttonText,
+                        followed && styles.buttonTextFollowed,
+                    ]}
+                >
+                    {followed ? "Following ✓" : "Follow"}
+                </Text>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -92,7 +116,27 @@ const styles = StyleSheet.create({
         textAlign: "center",
         lineHeight: 22,
     },
-});
 
+    button: {
+        marginTop: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 32,
+        borderRadius: 24,
+        borderWidth: 2,
+        borderColor: "#0D9488",
+        backgroundColor: "transparent",
+    },
+    buttonFollowed: {
+        backgroundColor: "#0D9488",
+    },
+    buttonText: {
+        fontSize: 14,
+        fontWeight: "600",
+        color: "#0D9488",
+    },
+    buttonTextFollowed: {
+        color: "#FFFFFF",
+    },
+});
 
 export default ProfileCard;
