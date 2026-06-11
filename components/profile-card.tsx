@@ -6,6 +6,7 @@ interface ProfileCardProps {
     studentId: string;
     department: string;
     bio: string;
+    skills?: string[]; 
 }
 
 const ProfileCard = ({
@@ -13,6 +14,7 @@ const ProfileCard = ({
     studentId,
     department,
     bio,
+    skills,
 }: ProfileCardProps) => {
     const initials = name
         .split(" ")
@@ -38,6 +40,15 @@ const ProfileCard = ({
             <View style={styles.divider} />
 
             <Text style={styles.bio}>{bio}</Text>
+
+            <View style={styles.skillsContainer}>
+                {skills?.map((skill, index) => (
+                <View key={index} style={styles.skillBadge}>
+                    <Text style={styles.skillText}>{skill}</Text>
+                </View>
+                ))}
+            </View>
+
 
             <TouchableOpacity
                 style={[
@@ -137,6 +148,27 @@ const styles = StyleSheet.create({
     buttonTextFollowed: {
         color: "#FFFFFF",
     },
+    skillsContainer: {
+  flexDirection: 'row',    // lay badges out horizontally
+  flexWrap: 'wrap',        // wrap to next line when full
+  justifyContent: 'center',
+  marginTop: 12,
+  gap: 8,
+},
+skillBadge: {
+  backgroundColor: '#EFF6FF',
+  borderRadius: 20,
+  paddingHorizontal: 12,
+  paddingVertical: 5,
+  borderWidth: 1,
+  borderColor: '#BFDBFE',
+},
+skillText: {
+  fontSize: 12,
+  color: '#1D4ED8',
+  fontWeight: '500',
+},
+
 });
 
 export default ProfileCard;
